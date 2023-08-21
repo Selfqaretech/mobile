@@ -1,7 +1,7 @@
 {
   "name": "selfqare-mobile",
   "version": "1.0.0",
-  "main": "node_modules/expo/AppEntry.js",
+  "main": "expo-router/entry",
   "scripts": {
     "start": "expo start",
     "android": "expo start --android",
@@ -9,10 +9,33 @@
     "web": "expo start --web"
   },
   "dependencies": {
+    "@expo-google-fonts/unbounded": "^0.2.3",
+    "@expo-google-fonts/urbanist": "^0.2.3",
+    "@rneui/base": "^4.0.0-rc.7",
+    "@rneui/themed": "^4.0.0-rc.8",
     "expo": "~49.0.7",
+    "expo-font": "~11.4.0",
+    "expo-location": "~16.1.0",
+    "expo-router": "2.0.0",
+    "expo-secure-store": "~12.3.1",
+    "expo-splash-screen": "^0.20.5",
     "expo-status-bar": "~1.6.0",
+    "iconsax-react-native": "^0.0.8",
+    "moti": "^0.26.0",
     "react": "18.2.0",
-    "react-native": "0.72.3"
+    "react-hook-form": "^7.45.4",
+    "react-native": "0.72.3",
+    "react-native-gesture-handler": "~2.12.0",
+    "react-native-keyboard-aware-scroll-view": "^0.9.5",
+    "react-native-maps": "1.7.1",
+    "react-native-reanimated": "~3.3.0",
+    "react-native-safe-area-context": "4.6.3",
+    "react-native-screens": "~3.22.0",
+    "react-native-svg": "13.9.0",
+    "react-native-vector-icons": "^10.0.0",
+    "react-navigation": "^4.4.4",
+    "react-navigation-shared-element": "^3.1.3",
+    "react-navigation-stack": "^2.10.4"
   },
   "devDependencies": {
     "@babel/core": "^7.20.0",

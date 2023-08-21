@@ -11,9 +11,13 @@
       "resizeMode": "contain",
       "backgroundColor": "#1443C3"
     },
+    "scheme": "selqare",
     "assetBundlePatterns": ["**/*"],
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "config": {
+        "usesNonExemptEncryption": false
+      }
     },
     "android": {
       "adaptiveIcon": {
@@ -26,6 +30,7 @@
     },
     "experiments": {
       "tsconfigPaths": true
-    }
+    },
+    "plugins": []
   }
 }

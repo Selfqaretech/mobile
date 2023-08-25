@@ -1,4 +1,4 @@
-import { View, Text } from "react-native";
+import { View } from "react-native";
 import React, { useState } from "react";
 import AuthScreenWraper from "@src/component/wrappers/Auth/Screen";
 import CustomText from "@src/component/text";
@@ -9,12 +9,7 @@ import useCustomTheme from "@src/hooks/useCustomTheme";
 import PasswordToggle from "@src/component/icons/PasswordToggle";
 import { CustomButton } from "@src/component/button";
 import { CustomLoginCurve } from "@src/component/icons/iconsax";
-import {
-  useForm,
-  Controller,
-  SubmitErrorHandler,
-  UseFormGetValues,
-} from "react-hook-form";
+import { useForm, Controller } from "react-hook-form";
 import { router } from "expo-router";
 
 // import { NavigationProp } from "react-navigation";
@@ -27,11 +22,8 @@ const Login = () => {
   const { theme } = useCustomTheme();
   const [passwordVisible, setPasswordVisible] = useState(false);
   const {
-    register,
-    setValue,
     handleSubmit,
     control,
-    reset,
     formState: { errors },
   } = useForm({
     defaultValues: {
@@ -123,7 +115,7 @@ const Login = () => {
           type="clear"
           noPadding
           textColor="primaryText"
-          width={50}
+          width={60}
           onPress={() => {
             router.push("/(auth)/register");
           }}

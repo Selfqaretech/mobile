@@ -9,7 +9,7 @@ const useThemeAsyncStore = () => {
     try {
       await SecureStore.setItemAsync(themeStoreKey, mode);
     } catch (e) {
-      console.log("Store Theme Error - ", e);
+      console.error("Store Theme Error - ", e);
     }
   };
   const getTheme = async (): Promise<StoredTheme> => {
@@ -20,7 +20,7 @@ const useThemeAsyncStore = () => {
         )) as StoredTheme | null) || "default"
       );
     } catch (e) {
-      console.log("Fetch Stored Theme Error - ", e);
+      console.error("Fetch Stored Theme Error - ", e);
       return "light";
     }
   };
@@ -32,7 +32,7 @@ const useThemeAsyncStore = () => {
       )) as StoredTheme | null;
       return !!storedThemeMode;
     } catch (e) {
-      console.log("Check Stored Theme Error - ", e);
+      console.error("Check Stored Theme Error - ", e);
       return false;
     }
   }, []);

@@ -1,14 +1,13 @@
-import { View, Text, Alert } from "react-native";
-import React, { useMemo } from "react";
-import { Link, Stack, router } from "expo-router";
+import { View } from "react-native";
+import React from "react";
+import { Stack, router } from "expo-router";
 import { CustomButton } from "@src/component/button";
 import useCustomTheme from "@src/hooks/useCustomTheme";
 import CustomText from "@src/component/text";
-import { StatusBar } from "expo-status-bar";
 import Spacing from "@src/component/spacing";
 
 const Index = () => {
-  const { toggleTheme, theme, reverseMode, updateTheme } = useCustomTheme();
+  const { toggleTheme, theme } = useCustomTheme();
 
   return (
     <>
@@ -25,7 +24,7 @@ const Index = () => {
         <CustomButton
           width={300}
           onPress={() => {
-            router.replace("/onboarding");
+            router.push("/onboarding");
           }}
         >
           Onboarding
@@ -48,6 +47,7 @@ const Index = () => {
         >
           Location
         </CustomButton>
+        <Spacing />
         <CustomButton width={300} type="clear" onPress={toggleTheme}>
           Toggle Theme
         </CustomButton>

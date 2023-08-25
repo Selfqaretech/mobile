@@ -1,15 +1,11 @@
 import { OnboardingSectionProps } from "@src/@types/section/onboarding";
 import { CustomButton } from "@src/component/button";
-import { CustomArrowRight, GoBack } from "@src/component/icons/iconsax";
-import IndicatorWrapper from "@src/component/indicator/Wrapper";
-import CustomInput from "@src/component/input";
+import { GoBack } from "@src/component/icons/iconsax";
 import CustomText from "@src/component/text";
-import { ONBOARDING } from "@src/constants/onboarding";
 import { onboarding } from "@src/styles/onboarding";
 import { Image } from "@rneui/base";
-import { useTheme } from "@rneui/themed";
-import { Dimensions, StyleSheet, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
+import { View } from "moti";
 
 const RESOLVED_URI_LIST = [
   require("@assets/onboarding/01.png"), // 0
@@ -19,7 +15,6 @@ const RESOLVED_URI_LIST = [
 ];
 
 const OnboardingSection = (props: OnboardingSectionProps) => {
-  const { theme } = useTheme();
   return (
     <SafeAreaView style={[onboarding.content]}>
       <Image

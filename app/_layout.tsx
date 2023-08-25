@@ -9,12 +9,12 @@ import {
   Urbanist_700Bold,
 } from "@expo-google-fonts/urbanist";
 import * as SplashScreen from "expo-splash-screen";
-import { useCallback, useEffect, useMemo, useRef } from "react";
+import { useCallback, useMemo, useRef } from "react";
 import { ThemeProvider } from "@rneui/themed";
 import { theme } from "@src/theme/main";
 import Index from "../src";
 import { SafeAreaProvider } from "react-native-safe-area-context";
-import { Slot, Stack } from "expo-router";
+import { Stack } from "expo-router";
 import { Alert, Appearance } from "react-native";
 import useCustomTheme from "@src/hooks/useCustomTheme";
 import useThemeAsyncStore from "@src/hooks/useThemeAsyncStore";
@@ -103,12 +103,6 @@ const ChooseTheme = () => {
     } else {
       const storedThemeMode = await getTheme();
       const systemThemeMode = Appearance.getColorScheme();
-      console.log(
-        storedThemeMode,
-        "STRORED THEME MODE>>>",
-        systemThemeMode,
-        "SYSTEM THEME >>>"
-      );
       setTheme(
         storedThemeMode === "default"
           ? systemThemeMode || "light"

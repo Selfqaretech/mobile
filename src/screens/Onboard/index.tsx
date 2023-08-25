@@ -1,13 +1,11 @@
-import { View, Text } from "react-native";
+import { View } from "react-native";
 import React, { useState } from "react";
-import { useTheme } from "@rneui/themed";
 import { ONBOARDING } from "@src/constants/onboarding";
 import OnboardingSection from "@src/section/Onboarding";
 import { router } from "expo-router";
 import IndicatorWrapper from "@src/component/indicator/Wrapper";
 
 const Onboarding = () => {
-  const { theme, updateTheme } = useTheme();
   const [page, setPage] = useState(0);
   const [animateBack, setAnimateBack] = useState(false);
   const pageDetails = ONBOARDING[page];
@@ -48,7 +46,7 @@ const Onboarding = () => {
               }
         }
       />
-      <View style={{ position: "absolute", alignSelf: "center", top: "60%" }}>
+      <View style={{ position: "absolute", alignSelf: "center", top: "50%" }}>
         <IndicatorWrapper index={page} total={ONBOARDING.length} />
       </View>
     </>

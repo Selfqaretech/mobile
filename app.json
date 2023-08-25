@@ -31,6 +31,13 @@
     "experiments": {
       "tsconfigPaths": true
     },
-    "plugins": []
+    "plugins": [
+      [
+        "expo-location",
+        {
+          "locationAlwaysAndWhenInUsePermission": "Allow $(PRODUCT_NAME) to use your location to determine the closest health service providers to you."
+        }
+      ]
+    ]
   }
 }

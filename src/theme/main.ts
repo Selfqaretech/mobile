@@ -52,6 +52,9 @@ export const theme = createTheme({
       leftIconContainerStyle: {
         marginRight: 8,
       },
+      errorStyle: {
+        fontSize: 14,
+      },
     },
     CheckBox: {
       textStyle: {

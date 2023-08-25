@@ -10,12 +10,12 @@ export const onboarding = StyleSheet.create({
     gap: 16,
   },
   image: {
-    height: 600,
+    height: layout.screenHeight(0.4),
     width: layout.screenWidth(0.8),
     marginBottom: layout.screenHeight(0.08),
   },
   text: {
-    marginHorizontal: 26,
+    marginHorizontal: layout.screenWidth(0.04),
   },
   indicatorItem: {
     width: 8,

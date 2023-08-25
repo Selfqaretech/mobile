@@ -1,21 +1,13 @@
-import { View, TextInput, Alert, TextInputProps } from "react-native";
-import React, {
-  createRef,
-  forwardRef,
-  useCallback,
-  useMemo,
-  useRef,
-  useState,
-} from "react";
+import { View, Alert } from "react-native";
+import React from "react";
 import AuthScreenWraper from "@src/component/wrappers/Auth/Screen";
 import CustomText from "@src/component/text";
 import Spacing from "@src/component/spacing";
-import CustomInput from "@src/component/input";
 import useCustomTheme from "@src/hooks/useCustomTheme";
 import { CustomButton } from "@src/component/button";
 import { CustomLoginCurve } from "@src/component/icons/iconsax";
 import { useForm, Controller } from "react-hook-form";
-import { router } from "expo-router";
+
 import OTPInput from "@src/component/input/OTP";
 
 const onSubmit = (data: object) => {
@@ -23,38 +15,21 @@ const onSubmit = (data: object) => {
     (prev, curr) => prev + (typeof curr === "string" ? curr : ""),
     ""
   );
-  console.log(data, string);
+  alert(`OTP - ${string}.  ${JSON.stringify(data)}`);
 };
-
-const insertStringAt = (string: string, index: number, newSubstring: string) =>
-  string.slice(0, index) + newSubstring + string.substring(index);
-const deleteStringAt = (string: string, index: number) =>
-  string.slice(0, index - 1 > 0 ? index - 1 : 0) + string.substring(index);
 
 const OTP = () => {
   const { theme } = useCustomTheme();
 
-  const [otpValue, setOtpValue] = useState("");
-
   const {
-    register,
-    setValue,
     handleSubmit,
     control,
-    reset,
     formState: { errors },
   } = useForm({
     defaultValues: {
       otp: "",
     },
   });
-
-  const handleChange = useCallback(
-    (string: string) => {
-      setOtpValue(string);
-    },
-    [setOtpValue]
-  );
 
   return (
     <AuthScreenWraper>
@@ -70,9 +45,9 @@ const OTP = () => {
         control={control}
         rules={{
           required: { value: true, message: "OTP is required" },
-          min: {
-            value: 1000,
-            message: "OTP should be a four digit number",
+          pattern: {
+            value: /^\d{4}$/,
+            message: "Invalid OTP",
           },
         }}
         render={({ field: { onChange, onBlur, value } }) => (

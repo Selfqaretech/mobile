@@ -1,19 +1,19 @@
-import { View, Text } from "react-native";
-import React from "react";
-import { Slot, Stack } from "expo-router";
-import { StatusBar } from "expo-status-bar";
-import useCustomTheme from "@src/hooks/useCustomTheme";
+import React, { useEffect } from "react";
+import { Slot, router } from "expo-router";
+import { useSession } from "@src/component/wrappers/Auth/ctx";
 
 const Layout = () => {
-  const {} = useCustomTheme();
-  return (
-    <>
-      <Stack.Screen
-        options={{ headerShown: false, statusBarTranslucent: true }}
-      />
-      <Slot />
-    </>
-  );
+  const { isLoggedIn, isLoading } = useSession() || {};
+
+  useEffect(() => {
+    if (!isLoggedIn && !isLoading) {
+      router.replace("/(auth)/login");
+    }
+  }, [isLoggedIn, isLoading]);
+
+  if (isLoading) return null;
+
+  return <Slot />;
 };
 
 export default Layout;

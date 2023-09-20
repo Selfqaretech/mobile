@@ -5,7 +5,6 @@ import {
   CustomLoginCurve,
 } from "@src/component/icons/iconsax";
 import CustomText from "@src/component/text";
-import { router } from "expo-router";
 import { View } from "react-native";
 
 export const ONBOARDING: OnboardingItemsProps[] = [

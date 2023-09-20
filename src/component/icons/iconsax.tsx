@@ -7,7 +7,7 @@ import {
 } from "iconsax-react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 
-export const CustomLoginCurve = (props: IconProps) => {
+export const CustomLoginCurve: React.FC<IconProps> = (props) => {
   const { theme } = useTheme();
   return (
     <LoginCurve
@@ -19,7 +19,7 @@ export const CustomLoginCurve = (props: IconProps) => {
   );
 };
 
-export const CustomArrowRight = (props: IconProps) => {
+export const CustomArrowRight: React.FC<IconProps> = (props) => {
   const { theme } = useTheme();
   return (
     <ArrowRight
@@ -31,7 +31,7 @@ export const CustomArrowRight = (props: IconProps) => {
   );
 };
 
-export const GoBack = (props: IconProps) => {
+export const GoBack: React.FC<IconProps> = (props) => {
   const { theme } = useTheme();
   const { top } = useSafeAreaInsets();
   return (

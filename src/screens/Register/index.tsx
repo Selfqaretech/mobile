@@ -1,5 +1,5 @@
-import { View, Text } from "react-native";
-import React, { useEffect, useMemo, useState } from "react";
+import { View } from "react-native";
+import React, { useMemo, useState } from "react";
 import AuthScreenWraper from "@src/component/wrappers/Auth/Screen";
 import CustomText from "@src/component/text";
 import Spacing from "@src/component/spacing";
@@ -9,15 +9,9 @@ import useCustomTheme from "@src/hooks/useCustomTheme";
 import PasswordToggle from "@src/component/icons/PasswordToggle";
 import { CustomButton } from "@src/component/button";
 import { CustomLoginCurve } from "@src/component/icons/iconsax";
-import {
-  useForm,
-  Controller,
-  SubmitErrorHandler,
-  UseFormGetValues,
-} from "react-hook-form";
+import { useForm, Controller } from "react-hook-form";
 import { router } from "expo-router";
 import { CheckBox, Icon } from "@rneui/themed";
-import useThrottle from "@src/hooks/useThottle";
 import useDebounce from "@src/hooks/useDebounce";
 
 const onSubmit = (data: { email: string; password: string }) => {
@@ -35,7 +29,6 @@ const Register = () => {
   const {
     handleSubmit,
     control,
-    reset,
     formState: { errors },
     watch,
   } = useForm({
@@ -73,7 +66,10 @@ const Register = () => {
 
   return (
     <AuthScreenWraper>
-      <CustomText type="display2">Getting Started</CustomText>
+      <CustomText type="display2" numberOfLines={1} adjustsFontSizeToFit>
+        Getting Started
+      </CustomText>
+      <Spacing size={0.3} />
       <CustomText color="textSecondary">
         Create an account to continue!
       </CustomText>

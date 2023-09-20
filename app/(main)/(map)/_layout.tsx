@@ -1,22 +1,8 @@
-import { View, Text } from "react-native";
 import React from "react";
-import { Slot, Stack } from "expo-router";
-import { StatusBar } from "expo-status-bar";
-import useCustomTheme from "@src/hooks/useCustomTheme";
+import { Slot } from "expo-router";
 
 const Layout = () => {
-  const { reverseMode } = useCustomTheme();
-  return (
-    <>
-      <Stack.Screen
-        options={{
-          headerShown: false,
-          statusBarTranslucent: true,
-        }}
-      />
-      <Slot />
-    </>
-  );
+  return <Slot />;
 };
 
 export default Layout;

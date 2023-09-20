@@ -1,14 +1,26 @@
-import React from "react";
-import { Stack } from "expo-router";
+import React, { useEffect } from "react";
+import { Stack, router } from "expo-router";
 import useCustomTheme from "@src/hooks/useCustomTheme";
 import { View } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { Location } from "iconsax-react-native";
 import CustomText from "@src/component/text";
+import { useSession } from "@src/component/wrappers/Auth/ctx";
 
 const Layout = () => {
   const { theme } = useCustomTheme();
   const { top } = useSafeAreaInsets();
+
+  const { isLoggedIn, isLoading } = useSession() || {};
+
+  useEffect(() => {
+    if (isLoggedIn && !isLoading) {
+      router.replace("/(main)/(home)/home");
+    }
+  }, [isLoggedIn, isLoading]);
+
+  if (isLoading) return null;
+
   return (
     <Stack
       screenOptions={{

@@ -1,41 +1,35 @@
-import { View, Text } from "react-native";
+import { View, ViewProps } from "react-native";
 import React from "react";
-import { MotiView } from "moti";
 import useCustomTheme from "@src/hooks/useCustomTheme";
+import Animated from "react-native-reanimated";
+import { usePulseAnimation } from "@src/hooks/animations/usePulseAnimation";
 
-const ThrobbingWrapper = (props: {
+const PulseWrapper: React.FC<{
   pulses?: number;
+  size?: number;
   children?: React.ReactElement;
-}) => {
+  pulseScale?: number;
+}> = (props) => {
   const { theme } = useCustomTheme();
-  const SIZE = 70;
+  const SIZE = props.size || 70;
+  const PULSE_SIZE = props.pulseScale || 1.5;
+
   return (
     <View
       style={{
         alignItems: "center",
         justifyContent: "center",
-        height: SIZE * 1.5,
-        width: SIZE * 1.5,
+        height: SIZE * PULSE_SIZE,
+        width: SIZE * PULSE_SIZE,
       }}
     >
       {[...Array(props.pulses || 3).keys()].map((_, index) => (
-        <MotiView
+        <PulsingCircle
           key={index}
-          from={{
-            opacity: 1,
-            scale: 1,
-          }}
-          animate={{
-            opacity: 0,
-            scale: 1.5,
-          }}
-          transition={{
-            duration: 2000,
-            delay: index * 600,
-            repeatReverse: false,
-            loop: true,
-            type: "timing",
-          }}
+          index={index}
+          delay={index * 600}
+          duration={2000}
+          pulseSize={PULSE_SIZE}
           style={{
             position: "absolute",
             height: SIZE,
@@ -62,4 +56,20 @@ const ThrobbingWrapper = (props: {
   );
 };
 
-export default ThrobbingWrapper;
+const PulsingCircle: React.FC<
+  ViewProps & {
+    index: number;
+    duration?: number;
+    delay?: number;
+    pulseSize?: number;
+  }
+> = (props) => {
+  const { animatedStyles } = usePulseAnimation(
+    props.delay,
+    props.duration,
+    props.pulseSize
+  );
+  return <Animated.View style={[props.style, animatedStyles]} />;
+};
+
+export default PulseWrapper;

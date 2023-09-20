@@ -1,12 +1,8 @@
-import { View, Text, Animated } from "react-native";
-import React, { useEffect, useMemo, useRef, useState } from "react";
-import useAnimateHexColors from "@src/hooks/useAnimateHexColors";
+import React from "react";
 import { useTheme } from "@rneui/themed";
-import useAnimateNumbers from "@src/hooks/useAnimateNumbers";
-import useColorAnimation from "@src/hooks/useAnimateColors";
 import { MotiView } from "moti";
 
-const IndicatorItem = (props: { active?: boolean }) => {
+const IndicatorItem: React.FC<{ active?: boolean }> = (props) => {
   const { active } = props;
   const { theme } = useTheme();
   const ACTIVE_COLOR: string = theme.colors.secondary;

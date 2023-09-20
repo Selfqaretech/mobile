@@ -1,10 +1,9 @@
-import { View, Text, TextInput } from "react-native";
-import React, { LegacyRef, RefObject, createRef, useMemo, useRef } from "react";
+import { View, TextInput } from "react-native";
+import React from "react";
 import CustomInput from ".";
-import { layout } from "@src/constants/layout";
 import { InputProps } from "@rneui/base";
 
-const OTPInput = (props: InputProps) => {
+const OTPInput = React.forwardRef<TextInput, InputProps>((props, ref) => {
   return (
     <View
       style={{
@@ -15,6 +14,7 @@ const OTPInput = (props: InputProps) => {
     >
       <CustomInput
         {...props}
+        ref={ref}
         maxLength={4}
         keyboardType="numeric"
         value={props.value}
@@ -30,6 +30,6 @@ const OTPInput = (props: InputProps) => {
       />
     </View>
   );
-};
+});
 
 export default OTPInput;

@@ -1,5 +1,5 @@
 import { hexToRGBString } from "@src/utils/color";
-import { useCallback, useEffect } from "react";
+import { useCallback } from "react";
 import { Animated, Easing } from "react-native";
 
 const useColorAnimation = (
@@ -8,7 +8,6 @@ const useColorAnimation = (
   duration: number,
   {
     easing,
-    pauseInitial,
   }: {
     easing?: (value: number) => number;
     pauseInitial?: boolean;

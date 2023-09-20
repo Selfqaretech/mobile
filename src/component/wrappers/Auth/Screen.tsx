@@ -3,7 +3,7 @@ import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view
 import useCustomTheme from "@src/hooks/useCustomTheme";
 import { layout } from "@src/constants/layout";
 
-const AuthScreenWraper = (props: PropsWithChildren) => {
+const AuthScreenWraper: React.FC<PropsWithChildren> = (props) => {
   const { theme } = useCustomTheme();
   return (
     <KeyboardAwareScrollView
@@ -11,7 +11,8 @@ const AuthScreenWraper = (props: PropsWithChildren) => {
         flex: 1,
         paddingHorizontal: layout.marginHorizontal(),
         paddingVertical: layout.marginVertical(),
-        paddingTop: layout.marginVertical(layout.margin * 5),
+        paddingTop: layout.marginVertical(layout.margin * 1),
+        overflow: "scroll",
       }}
       style={{ backgroundColor: theme.colors.background, flex: 1 }}
     >

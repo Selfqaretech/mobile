@@ -1,5 +1,5 @@
 import { View } from "react-native";
-import React, { useState } from "react";
+import React, { useMemo, useState } from "react";
 import AuthScreenWraper from "@src/component/wrappers/Auth/Screen";
 import CustomText from "@src/component/text";
 import Spacing from "@src/component/spacing";
@@ -11,20 +11,23 @@ import { CustomButton } from "@src/component/button";
 import { CustomLoginCurve } from "@src/component/icons/iconsax";
 import { useForm, Controller } from "react-hook-form";
 import { router } from "expo-router";
-
-// import { NavigationProp } from "react-navigation";
-
-const onSubmit = (data: { email: string; password: string }) => {
-  alert(`Hi ${data.email}`);
-};
+import { useLoginMutation } from "@src/api/auth";
+import { LoginProps } from "@src/@types/auth/user";
 
 const Login = () => {
   const { theme } = useCustomTheme();
   const [passwordVisible, setPasswordVisible] = useState(false);
   const {
+    mutate,
+    isLoading: loginIsLoading,
+    error: loginError,
+  } = useLoginMutation();
+
+  const {
     handleSubmit,
     control,
     formState: { errors },
+    setError,
   } = useForm({
     defaultValues: {
       email: "",
@@ -32,9 +35,29 @@ const Login = () => {
     },
   });
 
+  useMemo(() => {
+    if (loginError) {
+      const errorCode = loginError?.response?.status || 0;
+      let error;
+      if (errorCode === 404) {
+        error = "Account does not exist";
+      } else if (errorCode >= 400 && errorCode < 500) {
+        error = "Invalid credentials";
+      } else {
+        error = "Network error";
+      }
+      setError("email", error ? { message: error } : loginError);
+    }
+  }, [loginError]);
+
+  const onSubmit = (data: LoginProps) => mutate(data);
+
   return (
     <AuthScreenWraper>
-      <CustomText type="display2">Let’s Sign You In</CustomText>
+      <CustomText type="display2" numberOfLines={1} adjustsFontSizeToFit>
+        Let’s Sign You In
+      </CustomText>
+      <Spacing size={0.3} />
       <CustomText color="textSecondary">
         Welcome back, you’ve been missed!
       </CustomText>
@@ -45,7 +68,7 @@ const Login = () => {
         rules={{
           required: { value: true, message: "Username or Email is required" },
           minLength: {
-            value: 6,
+            value: 3,
             message: "Username or Email requires a minimum of 3 characters",
           },
         }}
@@ -89,8 +112,13 @@ const Login = () => {
           />
         )}
       />
-
-      <CustomButton type="clear" noPadding textColor="primaryText" width={120}>
+      <CustomButton
+        type="clear"
+        noPadding
+        textColor="primaryText"
+        width={120}
+        // onPress={() => router.push("/halleluyah/today")}
+      >
         Forgot Password
       </CustomButton>
       <Spacing flex minSize={2} />
@@ -98,6 +126,7 @@ const Login = () => {
         uppercase
         icon={<CustomLoginCurve color={theme.colors.white} />}
         onPress={handleSubmit(onSubmit)}
+        loading={loginIsLoading}
       >
         Sign In
       </CustomButton>

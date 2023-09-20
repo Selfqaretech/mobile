@@ -2,7 +2,7 @@ import { useCallback } from "react";
 import * as SecureStore from "expo-secure-store";
 
 type StoredTheme = "light" | "dark" | "default";
-const themeStoreKey = "selfqare-the-mode";
+const themeStoreKey = "selfqare-theme-mode";
 
 const useThemeAsyncStore = () => {
   const storeTheme = async (mode: StoredTheme): Promise<void> => {

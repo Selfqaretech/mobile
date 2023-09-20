@@ -20,7 +20,7 @@ export type OnboardingItemsProps = {
   title: string;
   body: string;
   primaryButton: string;
-  primaryIcon: (props: IconProps) => React.ReactElement;
+  primaryIcon: React.FC<IconProps>;
   secondaryButton?: string;
   secondaryAction?: (action?: () => void) => React.ReactElement;
 };

@@ -1,16 +1,10 @@
-import {
-  View,
-  Text,
-  SafeAreaViewComponent,
-  StyleSheet,
-  Modal,
-} from "react-native";
+import { View, StyleSheet, Modal } from "react-native";
 import React, { useCallback, useMemo, useState } from "react";
 import CustomText from "@src/component/text";
 import useCustomTheme from "@src/hooks/useCustomTheme";
 import { SafeAreaView } from "react-native-safe-area-context";
 import MapView from "react-native-maps";
-import ThrobbingWrapper from "@src/component/throbbing/Wrapper";
+import ThrobbingWrapper from "@src/component/pulse/Wrapper";
 import { Location as LocationIcon } from "iconsax-react-native";
 import { CustomButton } from "@src/component/button";
 import Spacing from "@src/component/spacing";
@@ -18,36 +12,45 @@ import Spacing from "@src/component/spacing";
 import * as Location from "expo-location";
 
 const LocationSelect = () => {
-  const { theme } = useCustomTheme();
+  const { theme, mode } = useCustomTheme();
   const [showRequestModal, setShowRequestModal] = useState(false);
   const [location, setLocation] = useState<Location.LocationObject | null>(
     null
   );
 
   useMemo(async () => {
-    const locationEnabled = await Location.hasServicesEnabledAsync();
-    setShowRequestModal(!locationEnabled);
-    if (locationEnabled) {
-      setLocation(await Location.getCurrentPositionAsync());
+    try {
+      const locationEnabled = await Location.hasServicesEnabledAsync();
+      setShowRequestModal(!locationEnabled);
+      if (locationEnabled) {
+        setLocation(await Location.getCurrentPositionAsync());
+      }
+    } catch (error) {
+      setLocation(null);
     }
   }, []);
 
   const askLocationPermission = useCallback(async () => {
-    let { status } = await Location.requestForegroundPermissionsAsync();
-    if (status !== "granted") {
-      console.error("Permission to access location was denied");
-      return;
-    }
+    try {
+      let { status } = await Location.requestForegroundPermissionsAsync();
+      if (status !== "granted") {
+        console.error("Permission to access location was denied");
+        return;
+      }
 
-    let location = await Location.getCurrentPositionAsync({});
-    setLocation(location);
-    setShowRequestModal(false);
+      let location = await Location.getCurrentPositionAsync({});
+      setLocation(location);
+      setShowRequestModal(false);
+    } catch (error) {
+      console.error(error);
+    }
   }, []);
 
   return (
     <SafeAreaView style={StyleSheet.absoluteFill}>
       <MapView
-        showsUserLocation
+        userInterfaceStyle={mode}
+        showsUserLocation={!!location}
         style={[StyleSheet.absoluteFill]}
         onPress={() => setShowRequestModal(true)}
         region={{
@@ -68,7 +71,7 @@ const LocationSelect = () => {
         <View
           style={{
             backgroundColor: theme.colors.background,
-            width: "70%",
+            width: "80%",
             alignSelf: "center",
             top: "20%",
             borderRadius: 12,

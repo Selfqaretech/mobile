@@ -8,7 +8,7 @@ import { CustomButton } from "@src/component/button";
 import { CustomLoginCurve } from "@src/component/icons/iconsax";
 import { useForm, Controller } from "react-hook-form";
 
-import OTPInput from "@src/component/input/OTP";
+import { CustomOTP } from "@src/component/input/CustomOTP";
 
 const onSubmit = (data: object) => {
   const string = Object.values(data).reduce(
@@ -24,7 +24,7 @@ const OTP = () => {
   const {
     handleSubmit,
     control,
-    formState: { errors },
+    // formState: { errors },
   } = useForm({
     defaultValues: {
       otp: "",
@@ -33,7 +33,9 @@ const OTP = () => {
 
   return (
     <AuthScreenWraper>
-      <CustomText type="display2">OTP Authentication</CustomText>
+      <CustomText type="display2" numberOfLines={1} adjustsFontSizeToFit>
+        OTP Authentication
+      </CustomText>
       <CustomText color="textSecondary">
         An authentication code has been sent to (+234) 8186935279
       </CustomText>
@@ -50,14 +52,17 @@ const OTP = () => {
             message: "Invalid OTP",
           },
         }}
-        render={({ field: { onChange, onBlur, value } }) => (
-          <OTPInput
-            value={value}
-            onChangeText={onChange}
-            onBlur={onBlur}
-            autoFocus
-            errorMessage={errors.otp?.message}
-          />
+        // render={({ field: { onChange, onBlur, value } }) => (
+        //   <OTPInput
+        //     value={value}
+        //     onChangeText={onChange}
+        //     onBlur={onBlur}
+        //     autoFocus
+        //     errorMessage={errors.otp?.message}
+        //   />
+        // )}
+        render={({ field: { onChange } }) => (
+          <CustomOTP otpCodeChanged={onChange} numberOfInputs={4} />
         )}
       />
 

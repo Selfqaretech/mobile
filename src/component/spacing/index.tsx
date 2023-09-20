@@ -2,12 +2,12 @@ import { View, Text } from "react-native";
 import React from "react";
 import { layout } from "@src/constants/layout";
 
-const Spacing = (props: {
+const Spacing: React.FC<{
   vertical?: boolean;
   size?: number;
   flex?: boolean;
   minSize?: number;
-}) => {
+}> = (props) => {
   return (
     <View
       style={{

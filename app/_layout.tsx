@@ -9,19 +9,42 @@ import {
   Urbanist_700Bold,
 } from "@expo-google-fonts/urbanist";
 import * as SplashScreen from "expo-splash-screen";
-import { useCallback, useMemo, useRef } from "react";
+import React, { useCallback } from "react";
 import { ThemeProvider } from "@rneui/themed";
 import { theme } from "@src/theme/main";
 import Index from "../src";
 import { SafeAreaProvider } from "react-native-safe-area-context";
-import { Stack } from "expo-router";
-import { Alert, Appearance } from "react-native";
-import useCustomTheme from "@src/hooks/useCustomTheme";
-import useThemeAsyncStore from "@src/hooks/useThemeAsyncStore";
+import { Slot } from "expo-router";
+import ChooseTheme from "@src/component/wrappers/Theme";
+
+import {
+  QueryClient,
+  QueryClientProvider,
+  focusManager,
+} from "@tanstack/react-query";
+import { AppStateStatus } from "react-native";
+import { Platform } from "react-native";
+import { useAppState } from "@src/hooks/tanstack/useAppState";
+import { useOnlineManager } from "@src/hooks/tanstack/useOnlineManager";
+import { SessionProvider } from "@src/component/wrappers/Auth/ctx";
 
 SplashScreen.preventAutoHideAsync();
 
+function onAppStateChange(status: AppStateStatus) {
+  // React Query already supports in web browser refetch on window focus by default
+  if (Platform.OS !== "web") {
+    focusManager.setFocused(status === "active");
+  }
+}
+
+const queryClient = new QueryClient({
+  defaultOptions: { queries: { retry: 2 } },
+});
+
 export default function App() {
+  useAppState(onAppStateChange);
+  useOnlineManager();
+
   const [unboundedFontsLoaded, unboundedFontError] = unboundedUseFonts({
     Unbounded_500Medium,
     Unbounded_700Bold,
@@ -49,78 +72,17 @@ export default function App() {
     return null;
 
   return (
-    <SafeAreaProvider>
-      <ThemeProvider theme={theme}>
-        <Index onLayout={onLayoutRootView}>
-          <Stack
-            screenOptions={{ headerShown: false, statusBarTranslucent: true }}
-          />
-          <ChooseTheme />
-        </Index>
-      </ThemeProvider>
-    </SafeAreaProvider>
+    <SessionProvider>
+      <SafeAreaProvider>
+        <ThemeProvider theme={theme}>
+          <QueryClientProvider client={queryClient}>
+            <Index onLayout={onLayoutRootView}>
+              <Slot initialRouteName="/(auth)" />
+              <ChooseTheme />
+            </Index>
+          </QueryClientProvider>
+        </ThemeProvider>
+      </SafeAreaProvider>
+    </SessionProvider>
   );
 }
-
-const ChooseTheme = () => {
-  const { setTheme, theme } = useCustomTheme();
-  const { getTheme, storeTheme, hasStoredTheme } = useThemeAsyncStore();
-
-  const firstPass = useRef(true);
-
-  useMemo(async () => {
-    if (!(await hasStoredTheme())) {
-      Alert.alert(
-        "Choose Theme",
-        "What theme  mode would you like to use on the app?.",
-        [
-          {
-            text: "Light",
-            onPress: async () => {
-              Appearance.setColorScheme("light");
-              setTheme("light");
-              await storeTheme("light");
-            },
-          },
-          {
-            text: "Dark",
-            onPress: async () => {
-              Appearance.setColorScheme("dark");
-              setTheme("dark");
-              await storeTheme("dark");
-            },
-          },
-          {
-            text: "System Default",
-            onPress: async () => {
-              const systemThemeMode = Appearance.getColorScheme();
-              setTheme(systemThemeMode || "light");
-              await storeTheme("default");
-            },
-          },
-        ]
-      );
-    } else {
-      const storedThemeMode = await getTheme();
-      const systemThemeMode = Appearance.getColorScheme();
-      setTheme(
-        storedThemeMode === "default"
-          ? systemThemeMode || "light"
-          : storedThemeMode
-      );
-      if (storedThemeMode !== "default") {
-        Appearance.setColorScheme(storedThemeMode);
-      }
-    }
-  }, []);
-
-  useCallback(async () => {
-    if (!firstPass.current) {
-      Appearance.setColorScheme(theme.mode);
-      await storeTheme(theme.mode);
-    }
-    firstPass.current = false;
-  }, [theme.mode])();
-
-  return null;
-};

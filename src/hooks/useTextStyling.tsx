@@ -1,6 +1,6 @@
 import { CustomTextProps } from "@src/@types/text";
 import { useTheme } from "@rneui/themed";
-import React, { useMemo } from "react";
+import { useMemo } from "react";
 import { StyleProp, StyleSheet, TextStyle } from "react-native";
 
 const fontSizes = {

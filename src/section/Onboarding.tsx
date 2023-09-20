@@ -14,7 +14,7 @@ const RESOLVED_URI_LIST = [
   require("@assets/onboarding/04.png"), // 3
 ];
 
-const OnboardingSection = (props: OnboardingSectionProps) => {
+const OnboardingSection: React.FC<OnboardingSectionProps> = (props) => {
   return (
     <SafeAreaView style={[onboarding.content]}>
       <Image

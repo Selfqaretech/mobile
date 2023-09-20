@@ -4,9 +4,15 @@
     "strict": true,
     "baseUrl": ".",
     "paths": {
-      "@src/*": ["src/*"],
-      "@assets/*": ["assets/*"],
-      "@app/*":["app"]
+      "@src/*": [
+        "src/*"
+      ],
+      "@assets/*": [
+        "assets/*"
+      ],
+      "@app/*": [
+        "app"
+      ]
     },
     "allowSyntheticDefaultImports": true,
     "jsx": "react-native",
@@ -29,5 +35,11 @@
     "noImplicitReturns": true,
     "noFallthroughCasesInSwitch": true,
     "forceConsistentCasingInFileNames": true
-  }
+  },
+  "include": [
+    "**/*.ts",
+    "**/*.tsx",
+    ".expo/types/**/*.ts",
+    "expo-env.d.ts"
+  ]
 }

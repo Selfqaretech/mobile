@@ -1,16 +1,14 @@
 import {
-  TextInput,
   NativeSyntheticEvent,
+  TextInput,
   TextInputFocusEventData,
 } from "react-native";
-import React, { PropsWithChildren, createRef, useRef, useState } from "react";
+import React, { useState } from "react";
 import { Input, InputProps } from "@rneui/themed";
 import useCustomTheme from "@src/hooks/useCustomTheme";
 
-const CustomInput = (props: InputProps) => {
+const CustomInput = React.forwardRef<TextInput, InputProps>((props, ref) => {
   const { theme } = useCustomTheme();
-  const ref: React.Ref<PropsWithChildren<TextInput>> =
-    props.ref || createRef<TextInput>();
 
   const [focused, setFocused] = useState<boolean>(false);
 
@@ -26,6 +24,7 @@ const CustomInput = (props: InputProps) => {
   return (
     <Input
       {...props}
+      ref={ref}
       onFocus={handleFocus}
       onBlur={handleBlur}
       inputStyle={[
@@ -48,6 +47,6 @@ const CustomInput = (props: InputProps) => {
       ]}
     />
   );
-};
+});
 
 export default CustomInput;

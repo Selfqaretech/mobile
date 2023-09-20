@@ -1,3 +1,5 @@
+import { GreyType } from "@rneui/themed";
+
 // Blue Color
 const primary = {
   100: "#D4DBFC",
@@ -24,7 +26,7 @@ const secondary = {
   900: "#035E45",
 };
 
-const grey = {
+const grey: GreyType = {
   100: "#f5f5f780",
   200: "#E3E6EB",
   300: "#BABFC5",
@@ -35,6 +37,15 @@ const grey = {
   800: "#0C122F",
   900: "#0B0E1E",
 };
+
+const reverseGrey: GreyType = ((): GreyType => {
+  const greyValues: string[] = Object.values(grey);
+  const greyKeys = Object.keys(grey);
+  const reverseGreyValues = greyValues.reverse();
+  return greyKeys.reduce<GreyType>((prev, curr, index) => {
+    return { ...prev, [curr]: reverseGreyValues[index] };
+  }, {});
+})();
 
 const common = {
   white: "#FFF",
@@ -48,6 +59,7 @@ const common = {
   textDark1: "#F9F8FD",
   textDark2: "#F9F8FD90",
   textDarkHelper: "#ffffff44",
+  warning: "#FBBC05",
 };
 
 export default {
@@ -56,5 +68,6 @@ export default {
   secondary,
   secondaryMain: secondary[700],
   grey,
+  reverseGrey,
   common,
 };

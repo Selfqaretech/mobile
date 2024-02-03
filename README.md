@@ -53,3 +53,11 @@ SelfQare is licensed under the MIT License. See [LICENSE](LICENSE) for more info
 ## Contact
 
 If you have any questions or feedback about SelfQare, please feel free to contact us at contact.selfqare@gmail.com or our tech support at selfqaretech@gmail.com. We would love to hear from you!
+
+### Development environment variables
+
+```
+EXPO_PUBLIC_API_URL=http://localhost:3000
+EXPO_PUBLIC_API_URL_PROD=https://fullstack-web-sooty.vercel.app
+EXPO_PUBLIC_TENANT_ID=Selfqare001 
+```

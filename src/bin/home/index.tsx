@@ -1,6 +1,5 @@
-import { View, StyleSheet } from "react-native";
+import { StyleSheet, View } from "react-native";
 import React from "react";
-import CustomText from "@src/component/text";
 import CustomBottomSheet from "@src/component/bottomsheet/CustomBottomSheet";
 import MapView from "react-native-maps";
 import useCustomTheme from "@src/hooks/useCustomTheme";
@@ -8,7 +7,7 @@ import { layout } from "@src/constants/layout";
 import { Link } from "expo-router";
 import CustomTitleCard from "@src/component/card/CustomTitleCard";
 
-const Home = () => {
+const Index = () => {
   const { mode } = useCustomTheme();
   return (
     <View style={{ alignItems: "center", justifyContent: "center", flex: 1 }}>
@@ -19,9 +18,21 @@ const Home = () => {
           { height: layout.screenHeight() - 300 + 24 },
         ]}
       />
-      <CustomText type="display1">Home</CustomText>
+      <CustomBottomSheet height={320}>
+        <Link href="/(main)/(home)/home/details" asChild>
+          <CustomTitleCard
+            rating={3}
+            title="FourSquare NGO"
+            subtitle="1 Harvey Road, Sabo-Yaba, Lagos"
+            align="center"
+            closeTime="5:00pm"
+            openStatus="Opened"
+            openTime="9:00am"
+          />
+        </Link>
+      </CustomBottomSheet>
     </View>
   );
 };
 
-export default Home;
+export default Index;
